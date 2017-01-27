@@ -43,6 +43,7 @@ export const appRoutes: Routes = [
 
   { path: 'LocationAdd', component: LocationAddComponent, data: {access : ["Admin"]}, canActivate: [LoggedInGuardService]  },
   { path: 'Locations', component: LocationsComponent, canActivate: [LoggedInGuardService]  },
+  { path: 'LocationDetail/:id', component: LocationDetailComponent, canActivate: [LoggedInGuardService]  },
 
   { path: 'Companies', component: CompaniesComponent, canActivate: [LoggedInGuardService]  },
   { path: 'JobsPost', component: PostJobsComponent, data: {access : ["Admin", "Company"]}, canActivate: [LoggedInGuardService]  },

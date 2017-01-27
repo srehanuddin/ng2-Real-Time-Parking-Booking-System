@@ -42,13 +42,13 @@ export class ResumeComponent implements OnInit {
         this.user = data;
 
         if(this.user && this.user.uid){
-          if(this.user.AccountType == UserType.Student){
+          /*if(this.user.AccountType == UserType.Student){
             resumesService.fetchResumeObj(this.user.uid);
             accountsService.fetchAccount(this.user.uid);
           } else {
             resumesService.fetchResumeObj(this.id);
             accountsService.fetchAccount(this.id);
-          }
+          }*/
           this.resume = resumesService.resume;
           this.account = accountsService.account;
         }

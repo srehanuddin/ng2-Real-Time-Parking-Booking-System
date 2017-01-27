@@ -1,3 +1,42 @@
-<p>
-  location-detail works!
-</p>
+
+<md-card class="example-card" >
+  <md-card-content *ngIf="locationDetail?.Location">
+
+    <h2>{{locationDetail?.Location}}</h2>
+    <p>
+      Number of Parking Slots : {{locationDetail?.NumberOfSlots}}
+    </p>
+
+    <form class="example-form" [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" *ngIf="locationDetail?.$key && isDialogShow" >
+
+      <md-card class="example-card">
+        <md-card-header>
+          <md-card-title><h2>Add New Location</h2></md-card-title>
+        </md-card-header>
+        <md-card-content>
+
+          <md-input-container class="example-full-width">
+            <input md-input placeholder="Location" [formControl]="myForm.controls['Location']"> 
+            <md-hint *ngIf="myForm.controls['Location'].touched && myForm.controls['Location'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+
+          <md-input-container class="example-full-width">
+            <input type="number" min="1" max="500" md-input placeholder="Number Of Slots" [formControl]="myForm.controls['NumberOfSlots']"> 
+            <md-hint *ngIf="myForm.controls['NumberOfSlots'].touched && myForm.controls['NumberOfSlots'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+      
+        </md-card-content>
+        <md-card-actions class="text-right padding-right-20 padding-bottom-10">
+          <span class="example-spacer"></span>
+          <button md-button md-raised-button color="primary" type="submit">Add</button>
+        </md-card-actions>
+      </md-card>
+
+    </form>
+    
+    <p *ngFor="let num of counter(locationDetail?.NumberOfSlots); let i = index" >
+      <button md-button md-raised-button color="primary" (click)="navigateReservation(locationDetail?.$key, i)" >Slot : {{i}}</button>
+    </p>
+  
+  </md-card-content>
+</md-card>
