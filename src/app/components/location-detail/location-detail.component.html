@@ -7,22 +7,29 @@
       Number of Parking Slots : {{locationDetail?.NumberOfSlots}}
     </p>
 
-    <form class="example-form" [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" *ngIf="locationDetail?.$key && isDialogShow" >
+    <form class="example-form" [formGroup]="myForm" (ngSubmit)="onSubmitBooking(myForm.value)" *ngIf="locationDetail?.$key && isDialogShow" >
 
       <md-card class="example-card">
         <md-card-header>
-          <md-card-title><h2>Add New Location</h2></md-card-title>
+          <md-card-title><h2>Reserve Parking Slot : {{selectedSlot}}</h2></md-card-title>
         </md-card-header>
         <md-card-content>
 
+          <p *ngIf="BookingErrorMessage" class="error-message">{{BookingErrorMessage}}</p>
+
           <md-input-container class="example-full-width">
-            <input md-input placeholder="Location" [formControl]="myForm.controls['Location']"> 
-            <md-hint *ngIf="myForm.controls['Location'].touched && myForm.controls['Location'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+            <input md-input placeholder="Start Date" type="date" [formControl]="myForm.controls['StartDate']"> 
+            <md-hint *ngIf="myForm.controls['StartDate'].touched && myForm.controls['StartDate'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
           </md-input-container>
 
           <md-input-container class="example-full-width">
-            <input type="number" min="1" max="500" md-input placeholder="Number Of Slots" [formControl]="myForm.controls['NumberOfSlots']"> 
-            <md-hint *ngIf="myForm.controls['NumberOfSlots'].touched && myForm.controls['NumberOfSlots'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+            <input md-input placeholder="Start Time" type="time" [formControl]="myForm.controls['StartTime']"> 
+            <md-hint *ngIf="myForm.controls['StartTime'].touched && myForm.controls['StartTime'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+
+          <md-input-container class="example-full-width">
+            <input type="number" min="1" max="24" md-input placeholder="Hours" [formControl]="myForm.controls['Hours']"> 
+            <md-hint *ngIf="myForm.controls['Hours'].touched && myForm.controls['Hours'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
           </md-input-container>
       
         </md-card-content>

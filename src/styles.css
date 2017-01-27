@@ -112,3 +112,10 @@ md-sidenav-layout.m2app-dark {
 md-icon {
   overflow: hidden;
 }
+
+.error-message {
+  background: red;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}

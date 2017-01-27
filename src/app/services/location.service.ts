@@ -3,30 +3,46 @@ import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'a
 import { Subject } from 'rxjs';
 import UserModel from "../models/user.model";
 import LocationModel from "../models/location.model";
+import BookingModel from "../models/booking.model";
 
 @Injectable()
 export class LocationService {
 
   locations: FirebaseListObservable<LocationModel[]>;
   location: FirebaseObjectObservable<LocationModel>;
-  //jobCompanySubject: Subject<String>;
+  bookings: FirebaseListObservable<BookingModel[]>;
+  bookingsLocationSlotSubject: Subject<any>;
 
   constructor(public af: AngularFire) {
-    //this.jobCompanySubject = new Subject();
+    this.bookingsLocationSlotSubject = new Subject();
 
-    this.locations = this.af.database.list('/locations'/*, {
+    this.locations = this.af.database.list('/locations');
+
+    this.bookings = this.af.database.list('/bookings', {
+      query: this.bookingsLocationSlotSubject
+    });
+
+    /*, {
         query: {
-          orderByChild: 'uid',
-          equalTo: this.jobCompanySubject
+          orderByChild: 'AccountType',
+          equalTo: this.accountTypeSubject
         }
-      }*/);
+      }*/
   }
 
-  fetchLocations(jobCompany){
+  /*fetchLocations(jobCompany){
+    let self = this;
+  }*/
+
+  fetchBookings(obj){
     let self = this;
 
+    this.bookings = this.af.database.list('/bookings', {
+      query: obj
+    });
+
     /*setTimeout(function(){
-      self.jobCompanySubject.next(jobCompany);
+      self.bookingsLocationSlotSubject.next(obj);
     },100);*/
   }
 
@@ -40,6 +56,14 @@ export class LocationService {
 
   deleteLocation(key: string) {    
     this.locations.remove(key); 
+  }
+
+  addBooking(job: BookingModel) {
+    this.bookings.push(job);
+  }
+
+  deleteBooking(key: string) {    
+    this.bookings.remove(key); 
   }
 
 }
