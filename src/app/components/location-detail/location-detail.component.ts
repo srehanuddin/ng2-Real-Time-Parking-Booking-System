@@ -9,7 +9,7 @@ import { UserService } from '../../services/user.service';
 import { LocationService } from "../../services/location.service";
 import LocationModel from "../../models/location.model";
 import BookingModel from "../../models/booking.model";
-
+import { Http, Response, Headers, RequestOptions }          from '@angular/http';
 
 @Component({
   selector: 'app-location-detail',
@@ -36,7 +36,8 @@ export class LocationDetailComponent implements OnInit {
     private locationsService : LocationService, 
     private store: Store<UserModel>,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private http: Http
     ) {
 
     route.params.subscribe(params => { 
@@ -55,6 +56,7 @@ export class LocationDetailComponent implements OnInit {
             resumesService.fetchResumeObj(this.id);
             accountsService.fetchAccount(this.id);
           }*/
+
 
           locationsService.fetchLocationObj(this.id);
           this.location = locationsService.location;
@@ -175,6 +177,22 @@ export class LocationDetailComponent implements OnInit {
     console.log('Booking Obj: ', obj);
     this.locationsService.addBooking(obj);
     this.fetchBookings();
+    
+    var mail = {
+      Email : this.user.Email
+    }
+    //this.http.post('http://localhost:3000/sendMail', JSON.stringify(mail), options)
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    var mail = {
+      Email : this.user.Email
+    }
+    //this.http.post('http://localhost:3000/sendMail', JSON.stringify(mail), options)
+    this.http.request('http://localhost:3000/sendMail/' + this.user.Email).subscribe(
+                data  => console.log("data == >", data.json()),
+                error =>  console.log("error == >", error.json())
+    );
     
     this.selectedSlot = null;
     this.isDialogShow = false;
