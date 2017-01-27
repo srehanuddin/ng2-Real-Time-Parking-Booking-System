@@ -6,18 +6,18 @@ import UserModel, { UserType } from "../../models/user.model";
 
 
 @Component({
-  selector: 'app-students',
-  templateUrl: './students.component.html',
-  styleUrls: ['./students.component.css']
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
 })
-export class StudentsComponent implements OnInit {
+export class UsersComponent implements OnInit {
 
   accounts : FirebaseListObservable<any[]>;
   user : UserModel;
 
   constructor(private accountService : AccountsService, private store: Store<UserModel>) {
 
-    accountService.fetchAccounts(UserType.Student)
+    accountService.fetchAccounts(UserType.User)
     this.accounts = accountService.accounts;
 
     store.select('appStore').subscribe((data : UserModel) => {

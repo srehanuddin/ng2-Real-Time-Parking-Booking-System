@@ -1,18 +1,19 @@
 <md-card class="example-card">
   <md-card-header>
-    <md-card-title><h2>Jobs</h2></md-card-title>
+    <md-card-title><h2>Feedbacks</h2></md-card-title>
   </md-card-header>
   <md-card-content>
 
     <md-list>
       <!--<h3 md-subheader>Folders</h3>-->
-      <md-list-item *ngFor="let item of jobs | async; let num = index">
+      <md-list-item *ngFor="let item of feedback | async; let num = index">
         <!--<md-icon md-list-avatar>folder</md-icon>-->
-        <h4 md-line>{{item.JobTitle}}</h4>
-        <p md-line> {{item.Company}} </p>
+        <h4 md-line>Title : {{item.Title}}</h4>
+        <p md-line>Description : {{item.Description}} </p>
+        <p md-line>User : {{item.FirstName}} {{item.LastName}} </p>
 
         <span class="example-spacer"></span>
-        <button md-button md-raised-button color="primary" [routerLink]="['/JobDetail', item.$key ]" >View</button>
+        <!--<button md-button md-raised-button color="primary" [routerLink]="['/JobDetail', item.$key ]" >View</button>-->
         <button md-button md-raised-button color="danger" *ngIf="canDelete(user, item.uid)" (click)="delete(item.$key)" >Delete</button>
         <!--<md-divider ></md-divider>-->
       </md-list-item>

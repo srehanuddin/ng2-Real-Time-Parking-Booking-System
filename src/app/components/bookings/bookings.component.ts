@@ -3,38 +3,30 @@ import { FirebaseListObservable } from 'angularfire2';
 import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { JobsService } from '../../services/jobs.service';
+import { LocationService } from '../../services/location.service';
 import UserModel, { UserType } from "../../models/user.model";
-import JobModel from "../../models/job.model";
+import BookingModel from "../../models/booking.model";
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-jobs',
-  templateUrl: './jobs.component.html',
-  styleUrls: ['./jobs.component.css']
+  selector: 'app-bookings',
+  templateUrl: './bookings.component.html',
+  styleUrls: ['./bookings.component.css']
 })
-export class JobsComponent implements OnInit {
+export class BookingsComponent implements OnInit {
 
   user : UserModel;
-  jobs : FirebaseListObservable<JobModel[]>;
+  bookings : FirebaseListObservable<BookingModel[]>;
   id : String;
+  bookingsArr : BookingModel[];
 
   constructor(
-    private jobsService : JobsService,
+    private locationsService : LocationService,
     private userService : UserService, 
     private store: Store<UserModel>,
     private router: Router,
     private route: ActivatedRoute
     ) {
-
-/*
-    store.select('appStore').subscribe((data : UserModel) => {
-      console.log("data from UserObservable", data);
-      if(data && data.uid){
-        this.router.navigate(['/Home']);
-      }
-    });
-    */
 
     route.params.subscribe(params => { 
       this.id = params['id']; 
@@ -50,14 +42,30 @@ export class JobsComponent implements OnInit {
           return;
         }
 
-        if(this.user.AccountType == UserType.Company){
-          jobsService.fetchJobs(this.user.uid);
-        } else if(this.id) {
-          jobsService.fetchJobs(this.id);
+        if(this.user.AccountType == UserType.User){
+          //LocationService.fetch(this.user.uid);
+          locationsService.fetchBookings({
+            orderByChild: 'uid',
+            startAt: this.user.uid
+          })
+
         } else { 
-          jobsService.fetchJobs(null);
+          locationsService.fetchBookings({});
         }
-        this.jobs = jobsService.jobs;
+        this.bookings = locationsService.bookings;
+        this.bookings.subscribe(data => {
+          if(this.user.AccountType == UserType.Admin){
+            this.bookingsArr = data;
+          } else {
+            let tmp = [];
+            for(var i = 0; i < data.length; i++){
+              if(data[i].uid == this.user.uid){
+                tmp.push(data[i]);
+              }
+            }
+            this.bookingsArr = tmp;
+          }  
+        })
       });
 
 
@@ -80,7 +88,7 @@ export class JobsComponent implements OnInit {
 
   delete(key : string){
     console.log("key : ", key);
-    this.jobsService.deleteJob(key)
+    this.locationsService.deleteBooking(key)
   }
 
 }

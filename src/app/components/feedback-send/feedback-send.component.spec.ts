@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ResumeAddComponent } from './resume-add.component';
+import { FeedbackSendComponent } from './feedback-send.component';
 
-describe('ResumeAddComponent', () => {
-  let component: ResumeAddComponent;
-  let fixture: ComponentFixture<ResumeAddComponent>;
+describe('FeedbackSendComponent', () => {
+  let component: FeedbackSendComponent;
+  let fixture: ComponentFixture<FeedbackSendComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResumeAddComponent ]
+      declarations: [ FeedbackSendComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResumeAddComponent);
+    fixture = TestBed.createComponent(FeedbackSendComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

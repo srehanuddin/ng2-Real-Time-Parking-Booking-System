@@ -7,8 +7,6 @@ import { Store } from '@ngrx/store';
 import UserModel, { UserType } from "../../models/user.model";
 import { UserService } from '../../services/user.service';
 import { LocationService } from "../../services/location.service";
-import { ResumesService } from "../../services/resumes.service";
-import ResumeModel from "../../models/resume.model";
 import LocationModel from "../../models/location.model";
 import BookingModel from "../../models/booking.model";
 
@@ -34,7 +32,6 @@ export class LocationDetailComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private resumesService : ResumesService,
     private userService : UserService, 
     private locationsService : LocationService, 
     private store: Store<UserModel>,
@@ -92,10 +89,6 @@ export class LocationDetailComponent implements OnInit {
         console.log("this.locationsService.bookings.subscribe", data)
         this.bookingsDetail = data;
       });
-        
-      /*this.account.subscribe((data : UserModel) => {
-        this.accountDetail = data;
-      });*/
 
     });
  
@@ -130,10 +123,10 @@ export class LocationDetailComponent implements OnInit {
     let currentDate = new Date();
     let selectedDate = new Date(value.StartDate + " " + value.StartTime);
 
-    // if(selectedDate < currentDate){
-    //   self.BookingErrorMessage = "Reservation time can not be past time";
-    //   return;
-    // }
+    if(selectedDate < currentDate){
+      self.BookingErrorMessage = "Reservation time can not be past time";
+      return;
+    }
 
     let endDate = new Date(selectedDate);
     endDate.setHours(endDate.getHours() + value.Hours);
@@ -183,40 +176,10 @@ export class LocationDetailComponent implements OnInit {
     this.locationsService.addBooking(obj);
     this.fetchBookings();
     
-    
-
-    /*self.locationsService.fetchBookings({
-        orderByChild: 'LocationSlot',
-        equalTo: obj.LocationSlot
-    });
-
-    self.locationsService.bookings.subscribe((data : BookingModel[]) => {
-        console.log("Booking subscribe", data);
-
-        let conflictFound = false;
-
-        for(let i = 0; i < data.length; i++){
-
-          let startTime = new Date(data[i].StartTimeStamp.toString());
-          let endTime = new Date(startTime)
-          endTime.setHours(Number(endTime.getHours()) + Number(data[i].Hours));
-          
-          if(selectedDate >= startTime && selectedDate <= endTime || endDate >= startTime && endDate <= endTime ){
-            conflictFound = true;
-          }
-
-          if(conflictFound){
-            self.BookingErrorMessage = "Location Already Reserved";
-            return;
-          }
-        }
-
-    });*/
-
-    // console.log('you submitted value: ', value);
-    // console.log('Booking Obj: ', obj);
-    // this.locationsService.addBooking(obj);
-    //this.router.navigate(['/Home']);
+    this.selectedSlot = null;
+    this.isDialogShow = false;
+    this.BookingErrorMessage = "";
+  
   }
 
   fetchBookings(){
@@ -228,6 +191,17 @@ export class LocationDetailComponent implements OnInit {
       orderByChild: 'LocationStartTime',
       startAt: LocationStartTime
     });
+  }
+
+  returnBtnColor(Locationkey, slot){
+
+    let self = this;
+    for(let i = 0; i < (self.bookingsDetail && self.bookingsDetail.length || 0) ; i++){
+      if(self.bookingsDetail[i].Slot == slot){
+        return "accent";
+      }
+    }
+    return "primary";
   }
 
   ngOnInit() {

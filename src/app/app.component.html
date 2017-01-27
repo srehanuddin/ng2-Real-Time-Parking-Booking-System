@@ -2,8 +2,9 @@
 
     <!-- Side Nav Bar -->
     <md-sidenav #sidenav mode="side" class="app-sidenav component-viewer-sidenav" >
+        
         <nav *ngIf="(user && user.uid)">
-            <h3>Hello {{(user && user.FirstName || "")}}</h3>
+            <h3>Menu</h3>
             <ul>
 
                 <li *ngIf="canShow(user, [userType.Admin])">
@@ -14,47 +15,37 @@
 
                 <li>
                     <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/Locations']" class="">
-                        Parking Locations
+                        View Parking Locations
                     </a>
                 </li>
 
-                <li *ngIf="user.AccountType == userType.Student">
-                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/ResumeAdd']" class="">
-                        Add My Resume
+                <li *ngIf="canShow(user, [userType.Admin])">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected"  [routerLink]="['/Users']" class="">
+                        View All Users
                     </a>
                 </li>
-                <li *ngIf="user.AccountType == userType.Student">
-                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/Resume', user.uid]" class="">
-                        View My Resume
+                <li *ngIf="canShow(user, [userType.Admin])">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected"  [routerLink]="['/Bookings']" class="">
+                        View All Bookings
                     </a>
                 </li>
-                
-                <li *ngIf="canShow(user, [userType.Company])">
-                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/Jobs']" class="">
-                        View My Jobs
+                <li *ngIf="canShow(user, [userType.User])">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected"  [routerLink]="['/Bookings']" class="">
+                        View My Bookings
                     </a>
                 </li>
-            </ul>
-        </nav>
 
-        <nav *ngIf="(user && user.uid)">
-            <h3>View</h3>
-            <ul>
-                <li *ngIf="canShow(user, [userType.Student])">
-                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/Companies']" class="">
-                        View All Companies
+                <li *ngIf="canShow(user, [userType.Admin])">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected"  [routerLink]="['/Feedback']" class="">
+                        Users Feedbacks
                     </a>
                 </li>
-                <li *ngIf="canShow(user, [userType.Student])">
-                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/Jobs']" class="">
-                        View All Jobs
+                <li *ngIf="canShow(user, [userType.User])">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected"  [routerLink]="['/FeedbackSend']" class="">
+                        Send Feedback
                     </a>
                 </li>
-                <li *ngIf="canShow(user, [userType.Company])">
-                    <a routerlinkactive="component-viewer-sidenav-item-selected"  [routerLink]="['/Students']" class="">
-                        View All Students
-                    </a>
-                </li>
+
             </ul>
         </nav>
 

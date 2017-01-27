@@ -41,8 +41,8 @@
 
     </form>
     
-    <p *ngFor="let num of counter(locationDetail?.NumberOfSlots); let i = index" >
-      <button md-button md-raised-button color="primary" (click)="navigateReservation(locationDetail?.$key, i)" >Slot : {{i}}</button>
+    <p *ngFor="let num of counter(locationDetail?.NumberOfSlots); let i = index" style="display: inline-block; padding: 10px" >
+      <button md-button md-raised-button [color]="returnBtnColor(locationDetail?.$key, i)" (click)="navigateReservation(locationDetail?.$key, i)" >Slot : {{i}}</button>
     </p>
   
   </md-card-content>

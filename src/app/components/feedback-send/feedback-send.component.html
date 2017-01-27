@@ -1,0 +1,37 @@
+<md-grid-list cols="3">
+  <md-grid-tile [colspan]="1" [rowspan]="1">
+  </md-grid-tile>
+  <md-grid-tile [colspan]="1" [rowspan]="1"  style="height: 150px">
+    
+    <form class="example-form" [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
+
+      <md-card class="example-card">
+        <md-card-header>
+          <md-card-title><h2>Send Feedback</h2></md-card-title>
+        </md-card-header>
+        <md-card-content>
+
+          <md-input-container class="example-full-width">
+            <input md-input placeholder="Title" [formControl]="myForm.controls['Title']"> 
+            <md-hint *ngIf="myForm.controls['Title'].touched && myForm.controls['Title'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+
+          <md-input-container class="example-full-width">
+            <input md-input placeholder="Description" [formControl]="myForm.controls['Description']"> 
+            <md-hint *ngIf="myForm.controls['Description'].touched && myForm.controls['Description'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+
+      
+        </md-card-content>
+        <md-card-actions class="text-right padding-right-20 padding-bottom-10">
+          <span class="example-spacer"></span>
+          <button md-button md-raised-button color="primary" type="submit">Send</button>
+        </md-card-actions>
+      </md-card>
+
+    </form>
+
+  </md-grid-tile>
+  <md-grid-tile [colspan]="1" [rowspan]="1">    
+  </md-grid-tile>
+</md-grid-list>
