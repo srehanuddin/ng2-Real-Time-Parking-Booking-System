@@ -51,7 +51,7 @@ export const appRoutes: Routes = [
   { path: 'Users', component: UsersComponent, data: {access : ["Admin"]}, canActivate: [LoggedInGuardService]  },
   { path: 'Bookings', component: BookingsComponent, data: {access : ["Admin", "User"]}, canActivate: [LoggedInGuardService]  },
 
-  { path: 'Feedback', component: FeedbackComponent, data: {access : ["Admin"]}, canActivate: [LoggedInGuardService]  },
+  { path: 'Feedback', component: FeedbackComponent, data: {access : ["Admin", "User"]}, canActivate: [LoggedInGuardService]  },
   { path: 'FeedbackSend', component: FeedbackSendComponent, data: {access : ["User"]}, canActivate: [LoggedInGuardService]  },
 
 

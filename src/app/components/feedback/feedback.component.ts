@@ -17,7 +17,9 @@ export class FeedbackComponent implements OnInit {
 
   user : UserModel;
   feedback : FirebaseListObservable<FeedbackModel[]>;
+  feedbackArr : FeedbackModel[];
   id : String;
+  reply = {};
 
   constructor(
     private feedbackService : FeedbackService,
@@ -40,9 +42,40 @@ export class FeedbackComponent implements OnInit {
           this.router.navigate(['/Login']);
           return;
         }
-        
+
         feedbackService.fetchFeedbacks(null);
         this.feedback = feedbackService.feedbacks;
+        this.feedback
+        // .map(x => {
+        //   console.log("x.Reply", x)
+        //   if(x.Reply){
+        //     x.Reply = JSON.parse(x.Reply);
+        //   }
+        //   return x;
+        // }).
+        .subscribe(data => {
+          let tmp = [];
+            for(var i = 0; i < data.length; i++){
+              if(data[i].uid == this.user.uid || this.user.AccountType == UserType.Admin){
+                if(data[i].Reply){
+                  data[i].Reply = JSON.parse(<any>data[i].Reply);
+                }
+                tmp.push(data[i]);
+              }
+            }
+            this.feedbackArr = tmp;
+          /*if(this.user.AccountType == UserType.Admin){
+            this.feedbackArr = data;
+          } else {
+            let tmp = [];
+            for(var i = 0; i < data.length; i++){
+              if(data[i].uid == this.user.uid){
+                tmp.push(data[i]);
+              }
+            }
+            this.feedbackArr = tmp;
+          }  */
+        })
       });
 
 
@@ -67,5 +100,26 @@ export class FeedbackComponent implements OnInit {
     console.log("key : ", key);
     this.feedbackService.deleteFeedback(key)
   }
+
+  replyFeedback(item, text){
+    console.log(item);
+    console.log(text.value);
+
+    item.Reply = item.Reply || [];
+
+    var obj = {
+      uid : this.user.uid,
+      FirstName : this.user.FirstName,
+      LastName : this.user.LastName,
+      Text : text.value
+    }
+
+    item.Reply.push(obj);
+
+    var str = JSON.stringify(item.Reply);
+    this.feedbackService.updateFeedback(item.$key, {Reply : str})
+  }
+
+  
 
 }

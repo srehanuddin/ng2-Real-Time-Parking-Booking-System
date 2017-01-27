@@ -6,16 +6,36 @@
 
     <md-list>
       <!--<h3 md-subheader>Folders</h3>-->
-      <md-list-item *ngFor="let item of feedback | async; let num = index">
+      <md-list-item *ngFor="let item of feedbackArr; let num = index" style="border: 1px solid grey; height: auto !important">
         <!--<md-icon md-list-avatar>folder</md-icon>-->
-        <h4 md-line>Title : {{item.Title}}</h4>
-        <p md-line>Description : {{item.Description}} </p>
-        <p md-line>User : {{item.FirstName}} {{item.LastName}} </p>
+        
+          <h4 md-line>Title : {{item.Title}}</h4>
+          <p md-line>Description : {{item.Description}} </p>
+          <p md-line>User : {{item.FirstName}} {{item.LastName}} </p>
 
-        <span class="example-spacer"></span>
-        <!--<button md-button md-raised-button color="primary" [routerLink]="['/JobDetail', item.$key ]" >View</button>-->
-        <button md-button md-raised-button color="danger" *ngIf="canDelete(user, item.uid)" (click)="delete(item.$key)" >Delete</button>
+          <span class="example-spacer"></span>
+          <button md-button md-raised-button color="primary" (click)="reply[item.$key] = !reply[item.$key]" >{{reply[item.$key] ? "Close" : "Reply"}}</button>
+          <button md-button md-raised-button color="danger" *ngIf="canDelete(user, item.uid)" (click)="delete(item.$key)" >Delete</button>
+          
+  
         <!--<md-divider ></md-divider>-->
+        <br><br>
+        <div md-line *ngIf="reply[item.$key]" style="padding: 20px">
+          
+          <p  *ngFor="let rep of item.Reply; let num = index" >
+            {{rep.FirstName}} {{rep.LastName}}  : {{rep.Text}} 
+          </p>
+
+          <p style="width: 50%">
+            <md-input-container class="example-full-width" >
+              <input md-input placeholder="Text" type="text" #text >
+            </md-input-container>
+            <br>
+            <button md-button color="primary"  (click)="replyFeedback(item, text)" >Send</button>
+          </p>
+
+        </div>
+
       </md-list-item>
       
     </md-list>

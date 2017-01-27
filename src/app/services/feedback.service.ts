@@ -26,4 +26,8 @@ export class FeedbackService {
     this.feedbacks.remove(key); 
   }
 
+  updateFeedback(key: string, obj) {
+    this.feedbacks.update(key, obj);
+  }
+
 }

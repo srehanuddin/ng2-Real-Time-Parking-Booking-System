@@ -40,6 +40,12 @@
                         Users Feedbacks
                     </a>
                 </li>
+
+                <li *ngIf="canShow(user, [userType.User])">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected"  [routerLink]="['/Feedback']" class="">
+                        My Feedbacks
+                    </a>
+                </li>
                 <li *ngIf="canShow(user, [userType.User])">
                     <a routerlinkactive="component-viewer-sidenav-item-selected"  [routerLink]="['/FeedbackSend']" class="">
                         Send Feedback
