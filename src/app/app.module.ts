@@ -19,6 +19,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { RegisterComponent } from './components/register/register.component';
 import { UserService } from './services/user.service';
 import { JobsService } from './services/jobs.service';
+import { LocationService } from './services/location.service';
 import { LoggedInGuardService } from './services/logged-in-guard.service';
 import { AccountsService } from './services/accounts.service';
 import { ResumesService } from './services/resumes.service';
@@ -30,12 +31,19 @@ import { JobsComponent } from './components/jobs/jobs.component';
 import { JobDetailComponent } from './components/job-detail/job-detail.component';
 import { ResumeAddComponent } from './components/resume-add/resume-add.component';
 import { ResumeComponent } from './components/resume/resume.component';
+import { LocationAddComponent } from './components/location-add/location-add.component';
+import { LocationsComponent } from './components/locations/locations.component';
+import { LocationDetailComponent } from './components/location-detail/location-detail.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [LoggedInGuardService] },
-  { path: 'Home', component: HomeComponent, /*data: {access : ["Admin", "Student", "Company"]},*/ canActivate: [LoggedInGuardService]  },
+  { path: 'Home', component: HomeComponent, canActivate: [LoggedInGuardService]  },
   { path: 'Login', component: LoginComponent },
   { path: 'Register', component: RegisterComponent },
+
+  { path: 'LocationAdd', component: LocationAddComponent, data: {access : ["Admin"]}, canActivate: [LoggedInGuardService]  },
+  { path: 'Locations', component: LocationsComponent, canActivate: [LoggedInGuardService]  },
+
   { path: 'Companies', component: CompaniesComponent, canActivate: [LoggedInGuardService]  },
   { path: 'JobsPost', component: PostJobsComponent, data: {access : ["Admin", "Company"]}, canActivate: [LoggedInGuardService]  },
   { path: 'Jobs', component: JobsComponent, canActivate: [LoggedInGuardService]  },
@@ -62,7 +70,10 @@ export const appRoutes: Routes = [
     JobsComponent,
     JobDetailComponent,
     ResumeAddComponent,
-    ResumeComponent
+    ResumeComponent,
+    LocationAddComponent,
+    LocationsComponent,
+    LocationDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +90,8 @@ export const appRoutes: Routes = [
     AccountsService,
     JobsService,
     LoggedInGuardService,
-    ResumesService
+    ResumesService,
+    LocationService
   ],
   bootstrap: [AppComponent]
 })

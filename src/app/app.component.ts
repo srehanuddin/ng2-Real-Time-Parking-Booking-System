@@ -36,10 +36,8 @@ export class AppComponent {
     this.router.navigate(['/Login']);
   }
 
-  canShow(user : UserModel, role){
-    if(user.AccountType == "Admin"){
-      return true;
-    } else if(user.AccountType == role){
+  canShow(user : UserModel, role : String[]){
+    if(role.indexOf(user.AccountType) != -1){
       return true;
     } else {
       return false;

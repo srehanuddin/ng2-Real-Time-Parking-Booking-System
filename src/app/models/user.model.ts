@@ -1,6 +1,6 @@
 export const UserType = {
-    Company : "Company",
-    Student : "Student"
+    User : "User",
+    Admin : "Admin"
 }
 
 let tmpArr = [];
@@ -14,8 +14,6 @@ interface UserModel {
     FirstName : String,
     LastName : String,
     Email : String,
-    Gender? : String,
-    AccountType : String,
-    Company : String
+    AccountType : String
 }
 export default UserModel;
