@@ -1,0 +1,59 @@
+.component-viewer-sidenav h3 {
+    border: none;
+    font-size: 10px;
+    letter-spacing: 1px;
+    line-height: 24px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin: 0;
+    padding: 0 16px;
+}
+
+.component-viewer-sidenav h3 {
+    background: rgba(0,0,0,.32);
+    color: #fff;
+}
+
+.component-viewer-sidenav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.component-viewer-sidenav li {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    margin: 0;
+    padding: 0;
+}
+
+.component-viewer-sidenav li {
+    border-color: rgba(0,0,0,.06);
+    color: rgba(0,0,0,.54);
+}
+
+.component-viewer-sidenav li>a {
+    box-sizing: border-box;
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 47px;
+    text-decoration: none;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    padding: 0 16px;
+    position: relative;
+}
+
+.component-viewer-sidenav li>a {
+    color: rgba(0,0,0,.54);
+}
+
+.component-viewer-sidenav li>a.component-viewer-sidenav-item-selected {
+    font-weight: 600;
+}
+
+.component-viewer-sidenav li>a:hover {
+    background: #fafafa;
+    color: #00bcd4;
+}

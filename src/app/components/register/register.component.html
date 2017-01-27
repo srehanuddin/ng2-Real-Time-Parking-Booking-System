@@ -1,0 +1,54 @@
+<md-grid-list cols="3">
+  <md-grid-tile [colspan]="1" [rowspan]="1">
+  </md-grid-tile>
+  <md-grid-tile [colspan]="1" [rowspan]="1"  style="height: 150px">
+    
+    <form class="example-form" [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
+
+      <md-card class="example-card">
+        <md-card-header>
+          <md-card-title><h2>Register</h2></md-card-title>
+        </md-card-header>
+        <md-card-content>
+
+          <md-input-container class="example-full-width">
+            <input md-input placeholder="First Name" [formControl]="myForm.controls['FirstName']"> 
+            <md-hint *ngIf="myForm.controls['FirstName'].touched && myForm.controls['FirstName'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+
+          <md-input-container class="example-full-width">
+            <input md-input placeholder="Last Name" [formControl]="myForm.controls['LastName']">
+            <md-hint *ngIf="myForm.controls['LastName'].touched && myForm.controls['LastName'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+
+          <md-input-container class="example-full-width" >
+            <input md-input placeholder="Email" type="email" [formControl]="myForm.controls['Email']">
+            <md-hint *ngIf="myForm.controls['Email'].touched && myForm.controls['Email'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+
+          <md-input-container class="example-full-width">
+            <input md-input placeholder="Password" type="password" [formControl]="myForm.controls['Password']">
+            <md-hint *ngIf="myForm.controls['Password'].touched && myForm.controls['Password'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+
+          <br>
+          <br>
+
+          <md-select placeholder="Account Type" name="accountType" class="example-full-width" [formControl]="myForm.controls['AccountType']">
+            <md-option value="User" selected>User</md-option>
+            <md-hint *ngIf="myForm.controls['AccountType'].touched && myForm.controls['AccountType'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-select>
+
+        </md-card-content>
+        <md-card-actions class="text-right padding-right-20 padding-bottom-10">
+          <span class="example-spacer"></span>
+          <button md-button md-raised-button color="primary" type="submit">Register</button>
+        </md-card-actions>
+      </md-card>
+
+    </form>
+
+  </md-grid-tile>
+  <md-grid-tile [colspan]="1" [rowspan]="1">    
+  </md-grid-tile>
+</md-grid-list>

@@ -1,0 +1,86 @@
+<md-sidenav-layout [class.m2app-dark]="isDarkTheme">
+
+    <!-- Side Nav Bar -->
+    <md-sidenav #sidenav mode="side" class="app-sidenav component-viewer-sidenav" >
+        <nav *ngIf="(user && user.uid)">
+            <h3>Hello {{(user && user.FirstName || "")}}</h3>
+            <ul>
+                <li *ngIf="user.AccountType == userType.Student">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/ResumeAdd']" class="">
+                        Add My Resume
+                    </a>
+                </li>
+                <li *ngIf="user.AccountType == userType.Student">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/Resume', user.uid]" class="">
+                        View My Resume
+                    </a>
+                </li>
+                <li *ngIf="canShow(user, userType.Company)">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/JobsPost']" class="">
+                        Post Jobs
+                    </a>
+                </li>
+                <li *ngIf="canShow(user, userType.Company)">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/Jobs']" class="">
+                        View My Jobs
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <nav *ngIf="(user && user.uid)">
+            <h3>View</h3>
+            <ul>
+                <li *ngIf="canShow(user, userType.Student)">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/Companies']" class="">
+                        View All Companies
+                    </a>
+                </li>
+                <li *ngIf="canShow(user, userType.Student)">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected" [routerLink]="['/Jobs']" class="">
+                        View All Jobs
+                    </a>
+                </li>
+                <li *ngIf="canShow(user, userType.Company)">
+                    <a routerlinkactive="component-viewer-sidenav-item-selected"  [routerLink]="['/Students']" class="">
+                        View All Students
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </md-sidenav>
+    <!-- Side Nav Bar -->
+
+    <!-- Header -->
+    <md-toolbar color="primary">
+        <button class="app-icon-button" *ngIf="(user && user.uid)" (click)="sidenav.toggle()">
+            <i class="material-icons app-toolbar-menu">menu</i>
+        </button>
+
+        Campus Recruitment System
+
+        <span class="example-spacer"></span>
+        <span *ngIf="(user && user.uid)">Welcome {{(user && user.FirstName || "")}}</span>
+        <button md-button [routerLink]="['/Login']" *ngIf="!(user && user.uid)" >Login</button>
+        <button md-button [routerLink]="['/Register']" *ngIf="!(user && user.uid)" >Register</button>
+        <!--<button md-button *ngIf="(user && user.uid)" (click)="logout()" >Logout</button>-->
+        <button class="app-icon-button" md-icon-button [mdMenuTriggerFor]="menu" *ngIf="(user && user.uid)">
+            <md-icon>more_vert</md-icon>
+        </button>
+        <md-menu #menu="mdMenu">
+            <button md-menu-item (click)="logout()">
+                <md-icon>settings-power</md-icon>
+                <span>Logout</span>
+            </button>
+        </md-menu>
+    </md-toolbar>
+    <!-- Header -->
+    
+
+    <div class="app-content">
+        <router-outlet></router-outlet>
+        <!-- Routed views go here -->
+    </div>
+
+</md-sidenav-layout>
