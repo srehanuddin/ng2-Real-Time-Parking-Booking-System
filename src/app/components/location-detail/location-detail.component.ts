@@ -70,7 +70,9 @@ export class LocationDetailComponent implements OnInit {
         this.locationDetail = data;
       });
 
-      let currentTime = Date.now();
+      let currentDate = new Date();
+      currentDate.setHours(currentDate.getHours() - 24);
+      let currentTime = currentDate.getTime();
       let LocationStartTime = currentTime + "|" + this.id;
       this.locationsService.fetchBookings({
         orderByChild: 'LocationStartTime',
@@ -151,6 +153,38 @@ export class LocationDetailComponent implements OnInit {
       StartTimeStamp : selectedDate.getTime(),
     }
 
+    let conflictFound = false;
+
+    for(let i = 0; i < (self.bookingsDetail && self.bookingsDetail.length || 0) ; i++){
+
+      if(self.bookingsDetail[i].Slot != self.selectedSlot){
+        continue;
+      }
+
+      let startTime = new Date(<any>self.bookingsDetail[i].StartTimeStamp);
+      let endTime = new Date(startTime)
+      endTime.setHours(Number(endTime.getHours()) + Number(self.bookingsDetail[i].Hours));
+
+      console.log(startTime);
+      console.log(endTime);
+      
+      if(selectedDate >= startTime && selectedDate <= endTime || endDate >= startTime && endDate <= endTime ){
+        conflictFound = true;
+      }
+
+      if(conflictFound){
+        self.BookingErrorMessage = "Location Already Reserved";
+        return;
+      }
+    }
+
+    console.log('you submitted value: ', value);
+    console.log('Booking Obj: ', obj);
+    this.locationsService.addBooking(obj);
+    this.fetchBookings();
+    
+    
+
     /*self.locationsService.fetchBookings({
         orderByChild: 'LocationSlot',
         equalTo: obj.LocationSlot
@@ -179,10 +213,21 @@ export class LocationDetailComponent implements OnInit {
 
     });*/
 
-    console.log('you submitted value: ', value);
-    console.log('Booking Obj: ', obj);
-    this.locationsService.addBooking(obj);
+    // console.log('you submitted value: ', value);
+    // console.log('Booking Obj: ', obj);
+    // this.locationsService.addBooking(obj);
     //this.router.navigate(['/Home']);
+  }
+
+  fetchBookings(){
+    let currentDate = new Date();
+    currentDate.setHours(currentDate.getHours() - 24);
+    let currentTime = currentDate.getTime();
+    let LocationStartTime = currentTime + "|" + this.id;
+    this.locationsService.fetchBookings({
+      orderByChild: 'LocationStartTime',
+      startAt: LocationStartTime
+    });
   }
 
   ngOnInit() {
